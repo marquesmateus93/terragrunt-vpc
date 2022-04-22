@@ -1,23 +1,23 @@
 # Terragrunt VPC
 
-## About:
+## About
 The project contains a module that creates an AWS VPC structure to provide communication between three subnets layers: one public and two privates.
 
-### - Public Subnets:
+### - Public Subnets
 Allows communication from the internet providing access to private subnets. Bastion hosts could do the communication.
 
-### - Private Subnets:
+### - Private Subnets
 It is divided into two types: application and database.
 
-#### Application Subnets:
+#### Application Subnets
 
 The application machines don't have external access and should be access by SSH, just from public subnets. This access should be done just from Load Balancer in a specific port.
 
-#### Database Subnets:
+#### Database Subnets
 
 The database subnet was thought to be associated with an RDS instance and be accessed just from private subnets in a specific port.
 
-## Structure:
+## Structure
 <img src="https://user-images.githubusercontent.com/5325106/164470862-0a546613-65de-455e-b329-493755daab2a.png" width="600" height="700"/>
 
 ## Requirements
