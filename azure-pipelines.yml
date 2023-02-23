@@ -12,4 +12,4 @@ parameters:
     default: false
 
 steps:
-  - script: ${{ parameters.yesNo }}
+  - script: echo ${{parameters.yesNo}}
