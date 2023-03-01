@@ -13,3 +13,5 @@ parameters:
 
 steps:
   - script: echo ${{parameters.yesNo}}
+  - script:  git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
+  - script: ls -lth ~/.tfenv
