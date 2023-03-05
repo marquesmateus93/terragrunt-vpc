@@ -43,4 +43,6 @@ jobs:
     - script: |
         ~/.tgenv/bin/tgenv install ${{parameters.TerragruntVersion}}
         ~/.tgenv/bin/tgenv use ${{parameters.TerragruntVersion}}
+      env:
+        TFENV_HOME: ~/.tfenv
       displayName: 'Version Setup'
