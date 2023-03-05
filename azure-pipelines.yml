@@ -2,13 +2,20 @@ trigger:
 - master
 
 parameters:
-  - name: yesNo
-    type: boolean
-    default: false
+  - name: TerraformAddress
+    type: string
+    default: "https://github.com/tfutils/tfenv.git"
+
+  - name: TerraformVersion
+    type: string
+    default: 1.1.7
 
 steps:
   - script: |
       echo ${{parameters.yesNo}}
-      git clone --depth=1 "https://github.com/tfutils/tfenv.git" ~/.tfenv 
+      git clone --depth=1 ${{parameters.TerraformAddress}} ~/.tfenv 
       ~/.tfenv/bin/tfenv --version
     displayName: 'Terraform Install'
+  - script: |
+      ~/.tfenv/bin/tfenv install ${{parameters.TerraformVersion}}
+      ~/.tfenv/bin/tfenv use ${{parameters.TerraformVersion}}
