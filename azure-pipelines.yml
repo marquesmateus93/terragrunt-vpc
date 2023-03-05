@@ -37,7 +37,7 @@ jobs:
   dependsOn: 'TerraformInstall'
   steps:
     - script: |
-        git clone ${{parameters.TerragruntVersion}} ~/.tgenv
+        git clone ${{parameters.TerragruntAddress}} ~/.tgenv
         ~/.tgenv/bin/tgenv --version
       displayName: 'Download'
     - script: |
