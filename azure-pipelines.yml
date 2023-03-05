@@ -12,7 +12,7 @@ parameters:
 
   - name: TerragruntAddress
     type: string
-    default: git clone https://github.com/cunymatthieu/tgenv.git ~/.tgenv
+    default: https://github.com/cunymatthieu/tgenv.git
 
   - name: TerragruntVersion
     type: string
