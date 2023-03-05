@@ -19,7 +19,8 @@ parameters:
     default: 0.36.6
 
 jobs:
-- job:
+
+- job: 'TerraformInstall'
   displayName: 'Terraform Install'
   steps:
     - script: |
@@ -30,9 +31,10 @@ jobs:
         ~/.tfenv/bin/tfenv install ${{parameters.TerraformVersion}}
         ~/.tfenv/bin/tfenv use ${{parameters.TerraformVersion}}
       displayName: 'Version Setup'
-- job:
+
+- job: 'TerragruntInstall'
   displayName: 'Terragrunt Install'
-  dependsOn: 'Terraform Install'
+  dependsOn: 'TerraformInstall'
   steps:
     - script: |
         git clone ${{parameters.TerragruntVersion}} ~/.tgenv
