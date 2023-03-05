@@ -4,7 +4,7 @@ trigger:
 parameters:
   - name: TerraformAddress
     type: string
-    default: "https://github.com/tfutils/tfenv.git"
+    default: https://github.com/tfutils/tfenv.git
 
   - name: TerraformVersion
     type: string
@@ -18,3 +18,4 @@ steps:
   - script: |
       ~/.tfenv/bin/tfenv install ${{parameters.TerraformVersion}}
       ~/.tfenv/bin/tfenv use ${{parameters.TerraformVersion}}
+    displayName: 'Terraform Version Setup'
