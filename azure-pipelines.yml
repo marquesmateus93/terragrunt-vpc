@@ -8,7 +8,7 @@ parameters:
 
 steps:
   - script: |
-    echo ${{parameters.yesNo}}
-    git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
-    ~/.tfenv/bin/tfenv --version
-    tfenv --version
+      echo ${{parameters.yesNo}}
+      git clone --depth=1 "https://github.com/tfutils/tfenv.git" ~/.tfenv 
+      ~/.tfenv/bin/tfenv --version
+    displayName: 'Terraform Install'
