@@ -12,7 +12,6 @@ parameters:
 
 steps:
   - script: |
-      echo ${{parameters.yesNo}}
       git clone --depth=1 ${{parameters.TerraformAddress}} ~/.tfenv 
       ~/.tfenv/bin/tfenv --version
     displayName: 'Terraform Install'
