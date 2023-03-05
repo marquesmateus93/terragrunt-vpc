@@ -10,12 +10,35 @@ parameters:
     type: string
     default: 1.1.7
 
-steps:
-  - script: |
-      git clone --depth=1 ${{parameters.TerraformAddress}} ~/.tfenv 
-      ~/.tfenv/bin/tfenv --version
-    displayName: 'Terraform Install'
-  - script: |
-      ~/.tfenv/bin/tfenv install ${{parameters.TerraformVersion}}
-      ~/.tfenv/bin/tfenv use ${{parameters.TerraformVersion}}
-    displayName: 'Terraform Version Setup'
+  - name: TerragruntAddress
+    type: string
+    default: git clone https://github.com/cunymatthieu/tgenv.git ~/.tgenv
+
+  - name: TerragruntVersion
+    type: string
+    default: 0.36.6
+
+jobs:
+- job:
+  displayName: 'Terraform Install'
+  steps:
+    - script: |
+        git clone --depth=1 ${{parameters.TerraformAddress}} ~/.tfenv 
+        ~/.tfenv/bin/tfenv --version
+      displayName: 'Download'
+    - script: |
+        ~/.tfenv/bin/tfenv install ${{parameters.TerraformVersion}}
+        ~/.tfenv/bin/tfenv use ${{parameters.TerraformVersion}}
+      displayName: 'Version Setup'
+- job:
+  displayName: 'Terragrunt Install'
+  dependsOn: 'Terraform Install'
+  steps:
+    - script: |
+        git clone ${{parameters.TerragruntVersion}} ~/.tgenv
+        ~/.tgenv/bin/tgenv --version
+      displayName: 'Download'
+    - script: |
+        ~/.tgenv/bin/tgenv install ${{parameters.TerragruntVersion}}
+        ~/.tgenv/bin/tgenv use ${{parameters.TerragruntVersion}}
+      displayName: 'Version Setup'
