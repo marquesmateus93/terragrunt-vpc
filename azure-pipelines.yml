@@ -24,7 +24,8 @@ jobs:
   displayName: 'Terraform Install'
   steps:
     - script: |
-        git clone --depth=1 ${{parameters.TerraformAddress}} ~/.tfenv 
+        git clone --depth=1 ${{parameters.TerraformAddress}} ~/.tfenv
+        ln -s ~/.tfenv/bin/* ~/.local/bin
         ~/.tfenv/bin/tfenv --version
       displayName: 'Download'
     - script: |
@@ -43,6 +44,4 @@ jobs:
     - script: |
         ~/.tgenv/bin/tgenv install ${{parameters.TerragruntVersion}}
         ~/.tgenv/bin/tgenv use ${{parameters.TerragruntVersion}}
-      env:
-        PATH: $HOME/.tfenv/bin:$PATH
       displayName: 'Version Setup'
