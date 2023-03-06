@@ -39,9 +39,9 @@ jobs:
   steps:
     - script: |
         git clone ${{parameters.TerragruntAddress}} ~/.tgenv
-        echo 'export PATH="~/.tgenv/bin:$PATH"' >> ~/.bash_profile
-        source ~/.bash_profile
         ~/.tgenv/bin/tgenv --version
+      env:
+        TGENV_ROOT: ~/.tgenv
       displayName: 'Download'
     - script: |
         ~/.tgenv/bin/tgenv install ${{parameters.TerragruntVersion}}
