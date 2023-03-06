@@ -38,12 +38,8 @@ jobs:
   dependsOn: 'TerraformInstall'
   steps:
     - script: |
-        git clone ${{parameters.TerragruntAddress}} ~/.tgenv
-        ~/.tgenv/bin/tgenv --version
+        curl -SL "https://github.com/gruntwork-io/terragrunt/releases/download/v${{parameters.TerragruntVersion}}/terragrunt_linux_amd64" -O terragrunt
+        terragrunt --version
       env:
         TGENV_ROOT: ~/.tgenv
       displayName: 'Download'
-    - script: |
-        ~/.tgenv/bin/tgenv install ${{parameters.TerragruntVersion}}
-        ~/.tgenv/bin/tgenv use ${{parameters.TerragruntVersion}}
-      displayName: 'Version Setup'
