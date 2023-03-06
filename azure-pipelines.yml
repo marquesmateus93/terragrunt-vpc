@@ -39,6 +39,7 @@ jobs:
   steps:
     - script: |
         git clone ${{parameters.TerragruntAddress}} ~/.tgenv
+        chmod +x ~/.tgenv/bin/*
         ln -s ~/.tgenv/bin/* ~/.local/bin
         ~/.tgenv/bin/tgenv --version
       displayName: 'Download'
