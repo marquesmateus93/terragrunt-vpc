@@ -12,7 +12,7 @@ parameters:
 
   - name: TerragruntAddress
     type: string
-    default: https://github.com/gruntwork-io/terragrunt/releases/download/v${{parameters.TerragruntVersion}}/terragrunt_linux_amd64
+    default: "https://github.com/gruntwork-io/terragrunt/releases/download/v${{parameters.TerragruntVersion}}/terragrunt_linux_amd64"
 
   - name: TerragruntVersion
     type: string
