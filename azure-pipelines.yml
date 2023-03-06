@@ -44,5 +44,5 @@ jobs:
         ~/.tgenv/bin/tgenv install ${{parameters.TerragruntVersion}}
         ~/.tgenv/bin/tgenv use ${{parameters.TerragruntVersion}}
       env:
-        TFENV_HOME: ~/.tfenv
+        PATH: $HOME/.tfenv/bin:$PATH
       displayName: 'Version Setup'
