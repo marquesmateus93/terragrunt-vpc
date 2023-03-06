@@ -39,7 +39,7 @@ jobs:
   steps:
     - script: |
         git clone ${{parameters.TerragruntAddress}} ~/.tgenv
-        export PATH="~/.tgenv/bin/:$PATH"
+        echo 'export PATH="~/.tgenv/bin:$PATH"' >> ~/.bash_profile
         ~/.tgenv/bin/tgenv --version
       displayName: 'Download'
     - script: |
