@@ -25,11 +25,10 @@ jobs:
   steps:
     - script: |
         curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
-        ls -ltha ~/.local
         unzip ~/terraform.zip -d ~/
         sudo cp ~/terraform  /usr/bin/terraform
         sudo chmod +x /usr/bin/terraform
-        terragrunt --version
+        terraform --version
       env:
         TERRAFORM_VERSION: ${{parameters.TerraformVersion}}
       displayName: 'Setup'
@@ -40,8 +39,9 @@ jobs:
   steps:
     - script: |
         curl -SL ${{parameters.TerragruntAddress}} --output ~/terragrunt
-        chmod +x ~/terragrunt
-        ./terragrunt --version
+        sudo cp ~/terragrunt /usr/bin/terragrunt
+        chmod +x /usr/bin/terragrunt
+        terragrunt --version
       env:
         TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
       displayName: 'Setup'
