@@ -4,7 +4,7 @@ trigger:
 parameters:
   - name: TerraformAddress
     type: string
-    default: https://github.com/tfutils/tfenv.git
+    default: https://github.com/hashicorp/terraform/archive/refs/tags/v$TERRAFORM_VERSION.zip
 
   - name: TerraformVersion
     type: string
@@ -20,22 +20,17 @@ parameters:
 
 jobs:
 
-- job: 'TerraformInstall'
-  displayName: 'Terraform Install'
+- job: 'Terraform'
   steps:
     - script: |
-        git clone --depth=1 ${{parameters.TerraformAddress}} ~/.tfenv
-        ln -s ~/.tfenv/bin/* ~/.local/bin
-        ~/.tfenv/bin/tfenv --version
-      displayName: 'Download'
-    - script: |
-        ~/.tfenv/bin/tfenv install ${{parameters.TerraformVersion}}
-        ~/.tfenv/bin/tfenv use ${{parameters.TerraformVersion}}
-      displayName: 'Version Setup'
+        curl -SL ${{parameters.TerraformAddress}} --output terraform.zip
+        unzip terraform.zip
+        chmod +x ~/.local/bin/terraform
+        terragrunt --version
+      displayName: 'Setup'
 
-- job: 'TerragruntInstall'
-  displayName: 'Terragrunt Install'
-  dependsOn: 'TerraformInstall'
+- job: 'Terragrunt'
+  dependsOn: 'Terraform'
   steps:
     - script: |
         curl -SL ${{parameters.TerragruntAddress}} --output terragrunt
@@ -43,4 +38,4 @@ jobs:
         ./terragrunt --version
       env:
         TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
-      displayName: 'Download'
+      displayName: 'Setup'
