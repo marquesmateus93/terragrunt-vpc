@@ -26,7 +26,8 @@ jobs:
         curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
         ls -lth ~/
         unzip ~/terraform.zip
-        chmod +x ~/.local/bin/terraform
+        chmod +x ~/terraform
+        ln -s terraform  ~/.local/bin/terraform
         terragrunt --version
       env:
         TERRAFORM_VERSION: ${{parameters.TerraformVersion}}
