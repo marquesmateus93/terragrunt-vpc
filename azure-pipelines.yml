@@ -37,7 +37,6 @@ jobs:
     - script: |
         git clone ${{parameters.TerragruntAddress}} ~/.tgenv
         echo 'export PATH="~/.tgenv/bin:$PATH"' >> ~/.profile
-        source ~/.bash_profile
         ~/.tgenv/bin/tgenv --version
       env:
         BASH_ENV: '~/.profile'
