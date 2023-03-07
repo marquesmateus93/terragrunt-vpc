@@ -24,6 +24,7 @@ jobs:
   steps:
     - script: |
         curl -SL ${{parameters.TerraformAddress}} --output ~/terraform.zip
+        ls -lth ~/
         unzip ~/terraform.zip
         chmod +x ~/.local/bin/terraform
         terragrunt --version
