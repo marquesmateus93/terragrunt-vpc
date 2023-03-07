@@ -23,7 +23,7 @@ jobs:
 - job: 'Terraform'
   steps:
     - script: |
-        wget --continue ${{parameters.TerraformAddress}} -O ~/terraform.zip
+        curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
         ls -lth ~/
         unzip ~/terraform.zip
         chmod +x ~/.local/bin/terraform
