@@ -6,13 +6,17 @@ parameters:
     type: string
     default: https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
 
-  - name: TerraformVersion
-    type: string
-    default: 1.1.7
-
   - name: TerragruntAddress
     type: string
     default: "https://github.com/gruntwork-io/terragrunt/releases/download/v$TERRAGRUNT_VERSION/terragrunt_linux_amd64"
+
+  - name: AWSCliAddress
+    type: string
+    default: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+
+  - name: TerraformVersion
+    type: string
+    default: 1.1.7
 
   - name: TerragruntVersion
     type: string
@@ -38,10 +42,20 @@ jobs:
   dependsOn: 'Terraform'
   steps:
     - script: |
-        curl -SL ${{parameters.TerragruntAddress}} --output ~/terragrunt
+        curl -SL ${{parameters.TerragruntAddress}} -o ~/terragrunt
         sudo cp ~/terragrunt /usr/bin/terragrunt
         sudo chmod +x /usr/bin/terragrunt
         terragrunt --version
       env:
         TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
       displayName: 'Setup'
+
+- job: 'AWSCli'
+  displayName: 'AWS CLI Setup'
+  dependsOn: 'Terragrunt'
+  steps:
+    - script: |
+        curl ${{parameters.AWSCliAddress}} -o ~/awscli.zip
+        unzip ~/awscli.zip -d ~/
+        sudo ./aws/install
+        aws --version
