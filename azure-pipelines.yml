@@ -27,6 +27,8 @@ jobs:
         unzip terraform.zip
         chmod +x ~/.local/bin/terraform
         terragrunt --version
+      env:
+        TERRAFORM_VERSION: ${{parameters.TerraformVersion}}
       displayName: 'Setup'
 
 - job: 'Terragrunt'
