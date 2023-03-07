@@ -4,7 +4,7 @@ trigger:
 parameters:
   - name: TerraformAddress
     type: string
-    default: https://github.com/hashicorp/terraform/archive/refs/tags/v$TERRAFORM_VERSION.zip
+    default: "https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_$TERRAFORM_VERSION_linux_amd64.zip"
 
   - name: TerraformVersion
     type: string
