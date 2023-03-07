@@ -40,7 +40,7 @@ jobs:
     - script: |
         curl -SL ${{parameters.TerragruntAddress}} --output ~/terragrunt
         sudo cp ~/terragrunt /usr/bin/terragrunt
-        chmod +x /usr/bin/terragrunt
+        sudo chmod +x /usr/bin/terragrunt
         terragrunt --version
       env:
         TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
