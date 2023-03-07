@@ -57,5 +57,6 @@ jobs:
     - script: |
         curl ${{parameters.AWSCliAddress}} -o ~/awscli.zip
         unzip ~/awscli.zip -x "aws/dist/awscli/examples/*" -d ~/
-        sudo ~/aws/install
+        sudo ~/aws/install --update
         aws --version
+      displayName: 'Steup'
