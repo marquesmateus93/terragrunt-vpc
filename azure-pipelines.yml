@@ -25,8 +25,8 @@ jobs:
   steps:
     - script: |
         curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
-        ls -ltha
-        unzip ~/terraform.zip
+        ls -ltha ~/
+        unzip ~/terraform.zip -d ~/
         sudo cp ~/terraform  /usr/bin/terraform
         chmod +x /usr/bin/terraform
         terragrunt --version
