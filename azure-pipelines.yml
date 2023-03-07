@@ -56,6 +56,6 @@ jobs:
   steps:
     - script: |
         curl ${{parameters.AWSCliAddress}} -o ~/awscli.zip
-        unzip ~/awscli.zip -d ~/
-        sudo ./aws/install
+        unzip ~/awscli.zip -x "aws/dist/awscli/examples/*" -d ~/
+        sudo ~/aws/install
         aws --version
