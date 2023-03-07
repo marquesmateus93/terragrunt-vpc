@@ -21,19 +21,21 @@ parameters:
 jobs:
 
 - job: 'Terraform'
+  displayName: 'Terraform Setup'
   steps:
     - script: |
         curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
         ls -lth ~/
         unzip ~/terraform.zip
-        chmod +x ~/terraform
-        ln -s terraform  ~/.local/bin/terraform
+        cp ~/terraform  /usr/bin/terraform
+        chmod +x /usr/bin/terraform
         terragrunt --version
       env:
         TERRAFORM_VERSION: ${{parameters.TerraformVersion}}
       displayName: 'Setup'
 
 - job: 'Terragrunt'
+  displayName: 'Terragrunt Setup'
   dependsOn: 'Terraform'
   steps:
     - script: |
