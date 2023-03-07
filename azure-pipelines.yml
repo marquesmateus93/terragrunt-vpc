@@ -23,7 +23,7 @@ jobs:
 - job: 'Terraform'
   steps:
     - script: |
-        curl -SL ${{parameters.TerraformAddress}} --output terraform.zip
+        curl -SL ${{parameters.TerraformAddress}} --output ~/terraform.zip
         unzip ~/terraform.zip
         chmod +x ~/.local/bin/terraform
         terragrunt --version
@@ -35,8 +35,8 @@ jobs:
   dependsOn: 'Terraform'
   steps:
     - script: |
-        curl -SL ${{parameters.TerragruntAddress}} --output terragrunt
-        chmod +x terragrunt
+        curl -SL ${{parameters.TerragruntAddress}} --output ~/terragrunt
+        chmod +x ~/terragrunt
         ./terragrunt --version
       env:
         TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
