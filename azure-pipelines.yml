@@ -8,11 +8,11 @@ parameters:
 
   - name: TerragruntAddress
     type: string
-    default: "https://github.com/gruntwork-io/terragrunt/releases/download/v$TERRAGRUNT_VERSION/terragrunt_linux_amd64"
+    default: https://github.com/gruntwork-io/terragrunt/releases/download/v"$TERRAGRUNT_VERSION"/terragrunt_linux_amd64
 
   - name: AWSCliAddress
     type: string
-    default: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    default: https://awscli.amazonaws.com/awscli-exe-linux-x86_64-"$AWSCLI_VERSION".zip
 
   - name: TerraformVersion
     type: string
@@ -21,6 +21,10 @@ parameters:
   - name: TerragruntVersion
     type: string
     default: 0.36.6
+
+  - name: AWSCliVersion
+    type: string
+    default: 2.0.30
 
 jobs:
 
@@ -59,4 +63,6 @@ jobs:
         unzip ~/awscli.zip -x "aws/dist/awscli/examples/*" -d ~/
         sudo ~/aws/install --update
         aws --version
+      env:
+        AWSCLI_VERSION: ${{parameters.AWSCliVersion}}
       displayName: 'Steup'
