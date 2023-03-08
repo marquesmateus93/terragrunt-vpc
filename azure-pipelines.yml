@@ -1,68 +1,11 @@
 trigger:
 - master
 
-parameters:
-  - name: TerraformAddress
-    type: string
-    default: https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
-
-  - name: TerragruntAddress
-    type: string
-    default: https://github.com/gruntwork-io/terragrunt/releases/download/v"$TERRAGRUNT_VERSION"/terragrunt_linux_amd64
-
-  - name: AWSCliAddress
-    type: string
-    default: https://awscli.amazonaws.com/awscli-exe-linux-x86_64-"$AWSCLI_VERSION".zip
-
-  - name: TerraformVersion
-    type: string
-    default: 1.1.7
-
-  - name: TerragruntVersion
-    type: string
-    default: 0.36.6
-
-  - name: AWSCliVersion
-    type: string
-    default: 2.0.30
+resources:
+  repositories:
+    - repository: azure-devops-templates
+      type: github
+      name: Dev-Marques-Ops-Templates/azure-devops-templates
 
 jobs:
-
-- job: 'Terraform'
-  displayName: 'Terraform Setup'
-  steps:
-    - script: |
-        curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
-        unzip ~/terraform.zip -d ~/
-        sudo cp ~/terraform  /usr/bin/terraform
-        sudo chmod +x /usr/bin/terraform
-        terraform --version
-      env:
-        TERRAFORM_VERSION: ${{parameters.TerraformVersion}}
-      displayName: 'Setup'
-
-- job: 'Terragrunt'
-  displayName: 'Terragrunt Setup'
-  dependsOn: 'Terraform'
-  steps:
-    - script: |
-        curl -SL ${{parameters.TerragruntAddress}} -o ~/terragrunt
-        sudo cp ~/terragrunt /usr/bin/terragrunt
-        sudo chmod +x /usr/bin/terragrunt
-        terragrunt --version
-      env:
-        TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
-      displayName: 'Setup'
-
-- job: 'AWSCli'
-  displayName: 'AWS CLI Setup'
-  dependsOn: 'Terragrunt'
-  steps:
-    - script: |
-        curl ${{parameters.AWSCliAddress}} -o ~/awscli.zip
-        unzip ~/awscli.zip -x "aws/dist/awscli/examples/*" -d ~/
-        sudo ~/aws/install --update
-        aws --version
-      env:
-        AWSCLI_VERSION: ${{parameters.AWSCliVersion}}
-      displayName: 'Steup'
+- template: terraform-terragrunt.yaml@azure-devops-templates
