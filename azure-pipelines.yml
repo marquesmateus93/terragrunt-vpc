@@ -7,7 +7,7 @@ resources:
       type: github
       name: Dev-Marques-Ops-Templates/azure-devops-templates
       #ref: refs/heads/main
-      endpoint: Dev-Marques-Ops-Live-Infrastructure
+      endpoint: github.com_marquesmateus93
 
 jobs:
 - template: terraform-terragrunt.yaml@azure-devops-templates
