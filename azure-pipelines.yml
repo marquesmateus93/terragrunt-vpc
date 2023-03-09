@@ -6,7 +6,7 @@ resources:
     - repository: azure-devops-templates
       type: github
       name: Dev-Marques-Ops-Templates/azure-devops-templates
-      ref: refs/heads/main
+      #ref: refs/heads/main
       endpoint: Dev-Marques-Ops-Live-Infrastructure
 
 jobs:
