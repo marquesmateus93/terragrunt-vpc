@@ -12,4 +12,3 @@ extends:
   template: terraform-terragrunt.yaml@azure-devops-templates
   parameters:
     TerragruntWorkDir: dev/us-east-1/tags/
-    TerragruntVersion: 0.44.5
