@@ -3,7 +3,6 @@ resources:
     - repository: azure-devops-templates
       name: Dev-Marques-Ops-Templates/azure-devops-templates
       endpoint: marques
-
-stages:
-  - template: terraform.yaml@azure-devops-templates
-  - template: terragrunt.yaml@azure-devops-templates
+steps:
+- template: terraform.yaml@azure-devops-templates
+- template: terragrunt.yaml@azure-devops-templates
