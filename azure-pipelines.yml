@@ -28,7 +28,7 @@ steps:
       curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
       unzip ~/terraform.zip -d $DIRECTORY
       
-      echo '##vso[task.prependpath]$DIRECTORY'
+      echo "##vso[task.prependpath]$DIRECTORY"
       sudo chmod +x $DIRECTORY/terraform
       terraform --version
       ls -lth ~/
@@ -44,15 +44,15 @@ steps:
       curl -SL ${{parameters.TerragruntAddress}} > $DIRECTORY/terragrunt
       sudo chmod +x $DIRECTORY/terragrunt
       
-      echo '##vso[task.prependpath]$DIRECTORY'
+      echo "##vso[task.prependpath]$DIRECTORY"
       terragrunt --version
       ls -lth ~/
       ls -lth $DIRECTORY
     env:
       TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
-    displayName: 'Install'
+    displayName: 'Terragrunt Install'
   - script: |
       #terragrunt plan --terragrunt-working-dir ${{parameters.TerragruntWorkDir}}
       terraform --version
       terragrunt --version
-    displayName: 'Plan'
+    displayName: 'Terragrunt Plan'
