@@ -20,44 +20,39 @@ parameters:
     default: 0.36.6
 
 
-jobs:
-- job: Terraform
-  steps:
-    - script: |
-        DIRECTORY=$(Build.SourcesDirectory)/terraform/${{parameters.TerraformVersion}}
-        
-        mkdir -p $DIRECTORY
-        curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
-        unzip ~/terraform.zip -d $DIRECTORY
-        
-        echo '##vso[task.prependpath]$DIRECTORY'
-        sudo chmod +x $DIRECTORY/terraform
-        terraform --version
-        ls -lth ~/
-        ls -lth $DIRECTORY
-      env:
-        TERRAFORM_VERSION: ${{parameters.TerraformVersion}}
-      displayName: 'Install'
+steps:
+  - script: |
+      DIRECTORY=$(Build.SourcesDirectory)/terraform/${{parameters.TerraformVersion}}
+      
+      mkdir -p $DIRECTORY
+      curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
+      unzip ~/terraform.zip -d $DIRECTORY
+      
+      echo '##vso[task.prependpath]$DIRECTORY'
+      sudo chmod +x $DIRECTORY/terraform
+      terraform --version
+      ls -lth ~/
+      ls -lth $DIRECTORY
+    env:
+      TERRAFORM_VERSION: ${{parameters.TerraformVersion}}
+    displayName: 'Terraform Install'
 
-- job: Terragrunt
-  dependsOn: Terraform
-  steps:
-    - script: |
-        DIRECTORY=$(Build.SourcesDirectory)/terragrunt/${{parameters.TerragruntVersion}}
-        
-        mkdir -p $DIRECTORY
-        curl -SL ${{parameters.TerragruntAddress}} > $DIRECTORY/terragrunt
-        sudo chmod +x $DIRECTORY/terragrunt
-        
-        echo '##vso[task.prependpath]$DIRECTORY'
-        terragrunt --version
-        ls -lth ~/
-        ls -lth $DIRECTORY
-      env:
-        TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
-      displayName: 'Install'
-    - script: |
-        #terragrunt plan --terragrunt-working-dir ${{parameters.TerragruntWorkDir}}
-        terraform --version
-        terragrunt --version
-      displayName: 'Plan'
+  - script: |
+      DIRECTORY=$(Build.SourcesDirectory)/terragrunt/${{parameters.TerragruntVersion}}
+      
+      mkdir -p $DIRECTORY
+      curl -SL ${{parameters.TerragruntAddress}} > $DIRECTORY/terragrunt
+      sudo chmod +x $DIRECTORY/terragrunt
+      
+      echo '##vso[task.prependpath]$DIRECTORY'
+      terragrunt --version
+      ls -lth ~/
+      ls -lth $DIRECTORY
+    env:
+      TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
+    displayName: 'Install'
+  - script: |
+      #terragrunt plan --terragrunt-working-dir ${{parameters.TerragruntWorkDir}}
+      terraform --version
+      terragrunt --version
+    displayName: 'Plan'
