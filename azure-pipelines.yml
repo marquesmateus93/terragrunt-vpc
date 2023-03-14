@@ -8,3 +8,4 @@ resources:
 steps:
   - template: terraform.yaml@azure-devops-templates
   - template: terragrunt.yaml@azure-devops-templates
+  - template: awscli.yaml@azure-devops-templates
