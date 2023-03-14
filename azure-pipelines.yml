@@ -1,14 +1,62 @@
-trigger:
-- master
+parameters:
+  - name: TerraformAddress
+    type: string
+    default: https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
 
-resources:
-  repositories:
-    - repository: azure-devops-templates
-      type: github
-      name: Dev-Marques-Ops-Templates/azure-devops-templates
-      endpoint: Marques
+  - name: TerragruntAddress
+    type: string
+    default: https://github.com/gruntwork-io/terragrunt/releases/download/v"$TERRAGRUNT_VERSION"/terragrunt_linux_amd64
 
-extends:
-  template: terraform-terragrunt.yaml@azure-devops-templates
-  parameters:
-    TerragruntWorkDir: dev/us-east-1/tags/
+  - name: TerragruntWorkDir
+    type: string
+    default: .
+
+  - name: TerraformVersion
+    type: string
+    default: 1.1.7
+
+  - name: TerragruntVersion
+    type: string
+    default: 0.36.6
+
+
+jobs:
+- job: Terraform
+  steps:
+    - script: |
+        DIRECTORY=$(Build.SourcesDirectory)/terraform/${{parameters.TerraformVersion}}
+        
+        mkdir -p $DIRECTORY
+        curl -SL ${{parameters.TerraformAddress}} -o ~/terraform.zip
+        unzip ~/terraform.zip -d $DIRECTORY
+        
+        echo '##vso[task.prependpath]$DIRECTORY'
+        sudo chmod +x $DIRECTORY/terraform
+        terraform --version
+        ls -lth ~/
+        ls -lth $DIRECTORY
+      env:
+        TERRAFORM_VERSION: ${{parameters.TerraformVersion}}
+      displayName: 'Install'
+
+- job: Terragrunt
+  steps:
+    - script: |
+        DIRECTORY=$(Build.SourcesDirectory)/terragrunt/${{parameters.TerragruntVersion}}
+        
+        mkdir -p $DIRECTORY
+        curl -SL ${{parameters.TerragruntAddress}} > $DIRECTORY/terragrunt
+        sudo chmod +x $DIRECTORY/terragrunt
+        
+        echo "##vso[task.setvariable variable=PATH;]$(PATH):$DIRECTORY"
+        terragrunt --version
+        ls -lth ~/
+        ls -lth $DIRECTORY
+      env:
+        TERRAGRUNT_VERSION: ${{parameters.TerragruntVersion}}
+      displayName: 'Install'
+    - script: |
+        #terragrunt plan --terragrunt-working-dir ${{parameters.TerragruntWorkDir}}
+        terraform --version
+        terragrunt --version
+      displayName: 'Plan'
