@@ -6,6 +6,7 @@ resources:
       endpoint: Marques
 
 steps:
-  - template: terraform.yaml@azure-devops-templates
-  - template: terragrunt.yaml@azure-devops-templates
-  - template: awscli.yaml@azure-devops-templates
+  - template: awscli/install.yaml@azure-devops-templates
+  - template: terraform/install.yaml@azure-devops-templates
+  - template: terragrunt/install.yaml@azure-devops-templates
+  - template: terragrunt/plan.yaml@azure-devops-templates
