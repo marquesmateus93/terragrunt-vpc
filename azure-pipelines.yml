@@ -5,7 +5,6 @@ resources:
       name: Dev-Marques-Ops-Templates/azure-devops-templates
       endpoint: Marques
 
-
 jobs:
   - template: terraform.yaml@azure-devops-templates
   - template: terragrunt.yaml@azure-devops-templates
