@@ -48,7 +48,7 @@ jobs:
         curl -SL ${{parameters.TerragruntAddress}} > $DIRECTORY/terragrunt
         sudo chmod +x $DIRECTORY/terragrunt
         
-        echo "##vso[task.setvariable variable=PATH;]$(PATH):$DIRECTORY"
+        echo '##vso[task.prependpath]$DIRECTORY'
         terragrunt --version
         ls -lth ~/
         ls -lth $DIRECTORY
