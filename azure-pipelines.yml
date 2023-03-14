@@ -10,3 +10,5 @@ steps:
   - template: terraform/install.yaml@azure-devops-templates
   - template: terragrunt/install.yaml@azure-devops-templates
   - template: terragrunt/plan.yaml@azure-devops-templates
+    parameters:
+      TerragruntWorkDir: dev/us-east-1/tags
