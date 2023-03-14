@@ -21,7 +21,7 @@ parameters:
 
 
 steps:
-  - script: |
+  - bash: |
       DIRECTORY=$(Build.SourcesDirectory)/terraform/${{parameters.TerraformVersion}}
       
       mkdir -p $DIRECTORY
@@ -37,7 +37,7 @@ steps:
       TERRAFORM_VERSION: ${{parameters.TerraformVersion}}
     displayName: 'Terraform Install'
 
-  - script: |
+  - bash: |
       DIRECTORY=$(Build.SourcesDirectory)/terragrunt/${{parameters.TerragruntVersion}}
       
       mkdir -p $DIRECTORY
