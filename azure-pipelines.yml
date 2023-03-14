@@ -6,8 +6,6 @@ resources:
       endpoint: Marques
 
 steps:
-  - checkout: self
-    path: $(Agent.JobName)
   - template: awscli/install.yaml@azure-devops-templates
   - template: terraform/install.yaml@azure-devops-templates
   - template: terragrunt/install.yaml@azure-devops-templates
