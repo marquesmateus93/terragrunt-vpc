@@ -5,13 +5,19 @@ resources:
       name: Dev-Marques-Ops-Templates/azure-devops-templates
       endpoint: Marques
 
+parameters:
+  - name: GIT_SSH_COMMAND
+    type: string
+
 variables:
-- group: AWS
+  - group: AWS
+  - group: GitHub
 
 steps:
   - template: awscli/install.yaml@azure-devops-templates
   - template: terraform/install.yaml@azure-devops-templates
   - template: terragrunt/install.yaml@azure-devops-templates
+  - bash: GIT_SSH_COMMAND='ssh -i $(GIT_SSH_COMMAND)'
   - template: terragrunt/plan.yaml@azure-devops-templates
     parameters:
       TerragruntWorkDir: dev/us-east-1/tags
