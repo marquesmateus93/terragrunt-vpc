@@ -13,7 +13,7 @@ steps:
   - template: awscli/install.yaml@azure-devops-templates
   - template: terraform/install.yaml@azure-devops-templates
   - template: terragrunt/install.yaml@azure-devops-templates
-  - template: git/setup.yaml@azure-devops-templates
+  - template: git/setup.yaml
     parameters:
       KnownHostsEntry: $(SSHKeySecureFile)
       SSHKeySecureFile: 'Azure Devops'
