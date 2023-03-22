@@ -1,5 +1,5 @@
 terraform {
-  source = "git::git@github.com:Dev-Marques-Ops/terraform-vpc.git//modules/vpc"
+  source = "git::git@github.com:Dev-Marques-Ops/terraform-vpc.git"
 }
 
 include {
@@ -9,7 +9,14 @@ include {
 dependency "tags" {
   config_path = "../tags"
 
-  mock_outputs_allowed_terraform_commands = ["plan","apply"]
+  mock_outputs = {
+    commons = {
+      account_id  = get_aws_account_id()
+      email       = "dummy_user@dummymail.com"
+    }
+
+    prefix_name = "Dummy Project"
+  }
 }
 
 inputs = {
