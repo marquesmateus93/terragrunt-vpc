@@ -14,7 +14,6 @@ dependency "tags" {
       account_id  = get_aws_account_id()
       email       = "dummy_user@dummymail.com"
     }
-
     prefix_name = "Dummy Project"
   }
 }
