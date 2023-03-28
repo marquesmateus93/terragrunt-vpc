@@ -22,7 +22,7 @@ steps:
     parameters:
       KnownHostsEntry: $(SSHKeySecureFile)
       SSHKeySecureFile: 'Azure Devops'
-      USER_EMAIL: ${{variables.USER_EMAIL}}
+      User_Email: ${{variables.USER_EMAIL}}
 
   - template: terragrunt/plan.yaml@azure-devops-templates
     parameters:
