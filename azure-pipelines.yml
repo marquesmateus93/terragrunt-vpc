@@ -8,7 +8,7 @@ resources:
 variables:
   - group: AWS
   - group: GitHub
-  - name: USER_EMAIL
+  - name: User_Email
     ${{ if eq(Build.DefinitionName, '') }}:
       value: ""
     ${{ else }}:
