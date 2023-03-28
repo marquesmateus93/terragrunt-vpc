@@ -9,7 +9,7 @@ variables:
   - group: AWS
   - group: GitHub
   - name: User_Email
-    ${{ if eq(Build.DefinitionName, '') }}:
+    ${{ if eq(${{Build.DefinitionName}}, '') }}:
       value: ""
     ${{ else }}:
       value: $(Build.DefinitionName)
