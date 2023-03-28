@@ -8,6 +8,11 @@ resources:
 variables:
   - group: AWS
   - group: GitHub
+  - name: USER_EMAIL
+    ${{ if eq(Build.DefinitionName, '') }}:
+      value: ""
+    ${{ else }}:
+      value: $(Build.DefinitionName)
 
 steps:
   - template: awscli/install.yaml@azure-devops-templates
@@ -17,6 +22,7 @@ steps:
     parameters:
       KnownHostsEntry: $(SSHKeySecureFile)
       SSHKeySecureFile: 'Azure Devops'
+
   - template: terragrunt/plan.yaml@azure-devops-templates
     parameters:
       TerragruntWorkDir: dev/us-east-1/tags
