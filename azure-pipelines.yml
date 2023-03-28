@@ -9,10 +9,10 @@ variables:
   - group: AWS
   - group: GitHub
   - name: User_Email
-    ${{ if eq('${{Build.DefinitionName}}', '') }}:
-      value: ""
+    ${{ if eq('${{Build.RequestedForEmail}}', '') }}:
+      value: "git@pipeline.com"
     ${{ else }}:
-      value: $(Build.DefinitionName)
+      value: $(Build.RequestedForEmail)
 
 steps:
   - template: awscli/install.yaml@azure-devops-templates
