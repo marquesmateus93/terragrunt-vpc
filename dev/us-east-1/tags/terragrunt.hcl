@@ -6,6 +6,7 @@ include {
   path = find_in_parent_folders()
 }
 
+
 inputs = {
   commons = {
     account_id  = get_aws_account_id()
