@@ -8,11 +8,6 @@ resources:
 variables:
   - group: AWS
   - group: GitHub
-  - name: User_Email
-    ${{ if eq('${{Build.RequestedForEmail}}', '') }}:
-      value: "git@pipeline.com"
-    ${{ else }}:
-      value: $(Build.RequestedForEmail)
 
 steps:
   - template: awscli/install.yaml@azure-devops-templates
@@ -22,7 +17,6 @@ steps:
     parameters:
       KnownHostsEntry: $(SSHKeySecureFile)
       SSHKeySecureFile: 'Azure Devops'
-      User_Email: $(User_Email)
 
   - template: terragrunt/plan.yaml@azure-devops-templates
     parameters:
