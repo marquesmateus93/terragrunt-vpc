@@ -19,11 +19,13 @@ steps:
       SSHKeySecureFile: 'Azure Devops'
   - template: terragrunt/format.yaml@azure-devops-templates
     parameters:
-      TerragruntWorkDir: dev/us-east-1/tags
+      TerragruntWorkDir: dev/us-east-1/
+      TerragruntPaths: tags
       AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
       AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
   - template: terragrunt/plan.yaml@azure-devops-templates
     parameters:
-      TerragruntWorkDir: dev/us-east-1/tags
+      TerragruntWorkDir: dev/us-east-1/
+      TerragruntPaths: tags
       AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
       AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
