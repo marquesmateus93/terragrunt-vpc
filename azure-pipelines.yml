@@ -15,6 +15,7 @@ steps:
     parameters:
       AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
       AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+      
   - template: terraform/install.yaml@azure-devops-templates
   - template: terragrunt/install.yaml@azure-devops-templates
   - template: git/setup.yaml@azure-devops-templates
