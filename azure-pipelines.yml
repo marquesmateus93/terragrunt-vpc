@@ -25,5 +25,3 @@ steps:
     parameters:
       TerragruntWorkDir: dev/us-east-1
       TerragruntPaths: ["tags", "vpc"]
-      AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-      AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
