@@ -12,7 +12,7 @@ parameters:
 
   - name: TerragruntPaths
     type: string
-    values: "tags, vpc"
+    default: "tags, vpc"
 
 variables:
   - group: AWS
