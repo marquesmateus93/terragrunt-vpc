@@ -11,8 +11,8 @@ parameters:
     default: "dev/us-east-1"
 
   - name: TerragruntPaths
-    type: object
-    default:
+    type: string
+    values:
     - tags
     - vpc
 
