@@ -30,9 +30,9 @@ steps:
       SSHKeySecureFile: 'Azure Devops'
   - template: terragrunt/format.yaml@azure-devops-templates
     parameters:
-      TerragruntWorkDir: $(TerragruntWorkDir)
-      TerragruntPaths: $(TerragruntPaths)
+      TerragruntWorkDir: ${{parameters.TerragruntWorkDir}}
+      TerragruntPaths: ${{parameters.TerragruntPaths}}
   - template: terragrunt/plan.yaml@azure-devops-templates
     parameters:
-      TerragruntWorkDir: $(TerragruntWorkDir)
-      TerragruntPaths: $(TerragruntPaths)
+      TerragruntWorkDir: ${{parameters.TerragruntWorkDir}}
+      TerragruntPaths: ${{parameters.TerragruntPaths}}
