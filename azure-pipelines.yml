@@ -9,9 +9,13 @@ variables:
   - group: AWS
   - group: GitHub
 
+  - name: TerragruntWorkDir
+    value: 'dev/us-east-1'
+  - name: TerragruntPaths
+    value: ["tags", "vpc"]
+
 steps:
   - template: awscli/install.yaml@azure-devops-templates
-
   - template: terraform/install.yaml@azure-devops-templates
   - template: terragrunt/install.yaml@azure-devops-templates
   - template: git/setup.yaml@azure-devops-templates
@@ -20,11 +24,9 @@ steps:
       SSHKeySecureFile: 'Azure Devops'
   - template: terragrunt/format.yaml@azure-devops-templates
     parameters:
-      TerragruntWorkDir: dev/us-east-1
-      TerragruntPaths: ["tags", "vpc"]
+      TerragruntWorkDir: $(TerragruntWorkDir)
+      TerragruntPaths: $(TerragruntPaths)
   - template: terragrunt/plan.yaml@azure-devops-templates
     parameters:
-      TerragruntWorkDir: dev/us-east-1
-      TerragruntPaths: ["tags", "vpc"]
-      AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-      AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+      TerragruntWorkDir: $(TerragruntWorkDir)
+      TerragruntPaths: $(TerragruntPaths)
