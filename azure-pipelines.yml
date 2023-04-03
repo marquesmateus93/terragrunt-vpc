@@ -8,9 +8,8 @@ resources:
 variables:
   - group: AWS
   - group: GitHub
-
   - name: TerragruntWorkDir
-    value: 'dev/us-east-1'
+    value: "dev/us-east-1"
   - name: TerragruntPaths
     value: ["tags", "vpc"]
 
