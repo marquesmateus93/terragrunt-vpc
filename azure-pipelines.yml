@@ -5,13 +5,20 @@ resources:
       name: Dev-Marques-Ops-Templates/azure-devops-templates
       endpoint: Marques
 
+parameters:
+  - name: TerragruntWorkDir
+    type: string
+    default: "dev/us-east-1"
+
+  - name: TerragruntPaths
+    type: object
+    default:
+    - tags
+    - vpc
+
 variables:
   - group: AWS
   - group: GitHub
-  - name: TerragruntWorkDir
-    value: "dev/us-east-1"
-  - name: TerragruntPaths
-    value: tags", "vpc"
 
 steps:
   - template: awscli/install.yaml@azure-devops-templates
