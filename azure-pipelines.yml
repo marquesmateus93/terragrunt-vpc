@@ -11,7 +11,7 @@ variables:
   - name: TerragruntWorkDir
     value: "dev/us-east-1"
   - name: TerragruntPaths
-    value: ["tags", "vpc"]
+    value: tags", "vpc"
 
 steps:
   - template: awscli/install.yaml@azure-devops-templates
