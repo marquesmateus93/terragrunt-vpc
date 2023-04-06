@@ -10,10 +10,6 @@ parameters:
     type: string
     default: "dev/us-east-1"
 
-  - name: TerragruntPaths
-    type: string
-    default: "tags vpc"
-
 variables:
   - group: AWS
   - group: GitHub
@@ -29,8 +25,8 @@ steps:
   - template: terragrunt/format.yaml@azure-devops-templates
     parameters:
       TerragruntWorkDir: ${{parameters.TerragruntWorkDir}}
-      TerragruntPaths: ${{parameters.TerragruntPaths}}
   - template: terragrunt/plan.yaml@azure-devops-templates
     parameters:
       TerragruntWorkDir: ${{parameters.TerragruntWorkDir}}
-      TerragruntPaths: ${{parameters.TerragruntPaths}}
+      AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+      AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
