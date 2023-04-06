@@ -8,7 +8,7 @@ resources:
 parameters:
   - name: TerragruntWorkDir
     type: string
-    default: "dev/us-east-1"
+    default: "dev/us-east-1/vpc"
 
 variables:
   - group: AWS
