@@ -26,9 +26,9 @@ steps:
     parameters:
       KnownHostsEntry: $(SSHKeySecureFile)
       SSHKeySecureFile: 'Azure Devops'
-  - template: terragrunt/format.yaml@azure-devops-templates
-    parameters:
-      TerragruntWorkDir: ${{parameters.TerragruntWorkDir}}
+  # - template: terragrunt/format.yaml@azure-devops-templates
+  #   parameters:
+  #     TerragruntWorkDir: ${{parameters.TerragruntWorkDir}}
   - template: terragrunt/plan.yaml@azure-devops-templates
     parameters:
       TerragruntWorkDir: ${{parameters.TerragruntWorkDir}}
