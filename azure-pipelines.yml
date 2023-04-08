@@ -1,6 +1,6 @@
 resources:
   repositories:
-    - repository: azure-devops-templates
+    - repository: templates
       type: github
       name: Dev-Marques-Ops-Templates/azure-devops-templates
       endpoint: Marques
@@ -15,18 +15,10 @@ variables:
   - group: GitHub
 
 steps:
-  - template: awscli/install.yaml@azure-devops-templates
-  - template: terraform/install.yaml@azure-devops-templates
-  - template: terragrunt/install.yaml@azure-devops-templates
-  - template: git/setup.yaml@azure-devops-templates
-    parameters:
-      KnownHostsEntry: $(SSHKeySecureFile)
-      SSHKeySecureFile: 'Azure Devops'
-  # - template: terragrunt/format.yaml@azure-devops-templates
-  #   parameters:
-  #     TerragruntWorkDir: ${{parameters.TerragruntWorkDir}}
-  - template: terragrunt/plan.yaml@azure-devops-templates
+  - template: templates/terragrunt-apply-workflow.yaml@templates
     parameters:
       TerragruntWorkDir: ${{parameters.TerragruntWorkDir}}
+      KnownHostsEntry: $(SSHKeySecureFile)
+      SSHKeySecureFile: 'Azure Devops'
       AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
       AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
