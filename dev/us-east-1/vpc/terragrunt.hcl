@@ -1,5 +1,5 @@
 terraform {
-  source = "git::git@github.com:Dev-Marques-Ops/terraform-vpc.git"
+  source = "git::git@github.com:Dev-Marques-Ops/terraform-vpc.git//modules/vpc"
 }
 
 include {

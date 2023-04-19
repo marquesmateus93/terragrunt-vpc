@@ -1,5 +1,5 @@
 terraform {
-  source="git::git@github.com:Dev-Marques-Ops/terraform-tags.git"
+  source="git::git@github.com:Dev-Marques-Ops/terraform-tags.git//modules/tags"
 }
 
 include {
