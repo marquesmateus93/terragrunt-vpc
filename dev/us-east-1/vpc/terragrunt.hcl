@@ -11,8 +11,8 @@ dependency "tags" {
 
   mock_outputs = {
     commons = {
-      account_id  = get_aws_account_id()
-      email       = "dummy_user@dummymail.com"
+      account_id = get_aws_account_id()
+      email      = "dummy_user@dummymail.com"
     }
     prefix_name = "Dummy Project"
   }
@@ -20,8 +20,8 @@ dependency "tags" {
 
 inputs = {
   tags = {
-    account_id  = dependency.tags.outputs.commons.account_id
-    email       = dependency.tags.outputs.commons.email
+    account_id = dependency.tags.outputs.commons.account_id
+    email      = dependency.tags.outputs.commons.email
   }
   prefix_name = dependency.tags.outputs.prefix_name
 }

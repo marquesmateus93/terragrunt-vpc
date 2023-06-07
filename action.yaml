@@ -1,19 +1,23 @@
-name: Install Terraform
-description: "Terraform install and setup version via tfenv"
+name: Terraform and Terragrunt Install
+description: "Terraform and Terragrunt install, setup versions via tfenv and tgenv."
 inputs:
   TerraformVersion:
     description: 'Terraform Version.'
     required: true
     default: ''
   TerragruntVersion:
-    description: 'Terraform Version.'
+    description: 'Terragrunt Version.'
     required: true
     default: ''
+  TerragruntPath:
+    description: 'Terragrunt folders.'
+    required: true
+    default: dev/us-east-1
 
 runs:
   using: "composite"
   steps:
-    - name: Terraform Install
+    - name: Terraform and Terragrunt Install
       run: |
         git \
         clone \
@@ -51,3 +55,11 @@ runs:
         tgenv install ${{ inputs.TerragruntVersion }} && \
         tgenv use ${{ inputs.TerragruntVersion }}
       shell: bash
+
+    - name: Terragrunt Format
+      run: |
+        terragrunt hclfmt \
+        --terragrunt-source-update \
+        --terragrunt-non-interactive \
+        --terragrunt-parallelism 1 \
+        --terragrunt-working-dir dev/us-east-1

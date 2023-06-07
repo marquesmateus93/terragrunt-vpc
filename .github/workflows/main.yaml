@@ -1,4 +1,4 @@
-name: Terragrunt VPC
+name: Terragrunt VPC Deploy
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  TerraformInstall:
+  TerragruntVPCDeploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
