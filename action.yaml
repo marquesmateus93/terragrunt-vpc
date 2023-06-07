@@ -21,7 +21,7 @@ runs:
     - name: Terraform Setup Environment
       run: |
         echo \
-        export "~/.tfenv/bin" >> $GITHUB_PATH
+        export "$HOME/.tfenv/bin" >> $GITHUB_PATH
       shell: bash
 
     - name: Terraform Setup Version
