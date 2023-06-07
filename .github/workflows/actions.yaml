@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Terraform Install:
+  TerraformInstall:
     runs-on: ubuntu-latest
     steps:
       - name: Install and setup version.
