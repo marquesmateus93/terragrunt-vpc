@@ -10,6 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install and setup version.
-        uses: marquesmateus93/tfenv
+        uses: marquesmateus93/actions/tfenv
         with:
           version: 1.3.6
