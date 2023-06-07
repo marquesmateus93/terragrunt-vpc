@@ -67,9 +67,9 @@ runs:
 
     - name: Terragrunt Plan
       run: |
-      terragrunt run-all plan \
-      --terragrunt-source-update \
-      --terragrunt-non-interactive \
-      --terragrunt-parallelism 1 \
-      --terragrunt-working-dir dev/us-east-1
+        terragrunt run-all plan \
+        --terragrunt-source-update \
+        --terragrunt-non-interactive \
+        --terragrunt-parallelism 1 \
+        --terragrunt-working-dir dev/us-east-1
       shell: bash
