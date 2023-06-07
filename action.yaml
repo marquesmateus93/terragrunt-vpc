@@ -16,14 +16,17 @@ runs:
         --depth=1 \
         https://github.com/tfutils/tfenv.git \
         ~/.tfenv
+      shell: bash
 
     - name: Terraform Setup Environment
       run: |
         echo \
         'export PATH=$PATH:$HOME/.tfenv/bin' >> \
         ~/.bashrc
+      shell: bash
 
     - name: Terraform Setup Version
       run: |
         tfenv install ${{ inputs.version }} && \
         tfenv use ${{ inputs.version }}
+      shell: bash
