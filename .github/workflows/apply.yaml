@@ -22,7 +22,7 @@ jobs:
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::${{ env.ACCOUNT_NUMBER }}:role/VPCCreator
+          role-to-assume: arn:aws:iam::${{ env.ACCOUNT_NUMBER }}:role/GitHubActions
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Install and setup version.
