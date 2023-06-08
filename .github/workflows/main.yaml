@@ -26,7 +26,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Install and setup version.
-        uses: ./actions/all.yaml
+        uses: ./
         with:
           TerraformVersion: 1.3.6
           TerragruntVersion: 0.42.5

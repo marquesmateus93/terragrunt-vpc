@@ -66,6 +66,7 @@ runs:
       shell: bash
 
     - name: Terragrunt Plan
+      if: github.ref_name == 'master'
       run: |
         git config --global url."https://github.com/".insteadOf \
         ssh://git@github.com/ && \
