@@ -86,7 +86,7 @@ runs:
       env:
         PLAN: "Terraform \n ${{ steps.plan.outputs.stdout }}"
       with:
-        github-token: ${{ inputs.GitHubToken || github.token }}
+        github-token: ${{ github.token }}
         script: |
           const output = `#### Terraform ⚙️\`${{ steps.init.outcome }}\`
           #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
