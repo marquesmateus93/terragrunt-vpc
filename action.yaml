@@ -13,9 +13,6 @@ inputs:
     description: 'Terragrunt folders.'
     required: true
     default: dev/us-east-1
-  GitHubToken:
-    description: ''
-    required: true
 
 runs:
   using: "composite"
@@ -83,6 +80,7 @@ runs:
 
     - name: Update Pull Request
       uses: actions/github-script@v5
+      if: ${{ github.event_name == 'pull_request' }}
       env:
         PLAN: "Terraform \n ${{ steps.plan.outputs.stdout }}"
       with:
