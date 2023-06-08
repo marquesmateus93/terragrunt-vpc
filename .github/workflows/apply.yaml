@@ -8,13 +8,14 @@ on:
 env:
   ACCOUNT_NUMBER:     ${{ secrets.AWS_ACCOUNT }}
   AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
-  TerraformVersion:   1.3.6
-  TerragruntVersion:  0.42.5
-  TerragruntPath:     dev/us-east-1
 
 jobs:
   TerragruntVPCDeploy:
     runs-on: ubuntu-latest
+    env:
+      TerraformVersion: 1.3.6
+      TerragruntVersion: 0.42.5
+      TerragruntPath: dev/us-east-1
     permissions:
       id-token: write
       contents: read
