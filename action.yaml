@@ -67,6 +67,8 @@ runs:
 
     - name: Terragrunt Plan
       run: |
+        git config --global url."https://github.com/".insteadOf \
+        ssh://git@github.com/ && \
         terragrunt run-all plan \
         --terragrunt-source-update \
         --terragrunt-non-interactive \
