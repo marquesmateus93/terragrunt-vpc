@@ -8,6 +8,7 @@ on:
 env:
   ACCOUNT_NUMBER: ${{ secrets.AWS_ACCOUNT }}
   AWS_REGION:     ${{ vars.AWS_DEFAULT_REGION }}
+  GitHubToken:    ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   TerragruntVPCDeploy:

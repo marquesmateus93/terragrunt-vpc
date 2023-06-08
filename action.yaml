@@ -13,6 +13,9 @@ inputs:
     description: 'Terragrunt folders.'
     required: true
     default: dev/us-east-1
+  GitHubToken:
+    description: ''
+    required: true
 
 runs:
   using: "composite"
@@ -83,7 +86,7 @@ runs:
       env:
         PLAN: "Terraform \n ${{ steps.plan.outputs.stdout }}"
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ inputs.GitHubToken }}
         script: |
           const output = `#### Terraform ⚙️\`${{ steps.init.outcome }}\`
           #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
