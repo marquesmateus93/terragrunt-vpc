@@ -62,12 +62,11 @@ runs:
         --terragrunt-source-update \
         --terragrunt-non-interactive \
         --terragrunt-parallelism 1 \
-        --terragrunt-working-dir dev/us-east-1
+        --terragrunt-working-dir ${{ inputs.TerragruntPath }}
       shell: bash
 
     - name: Terragrunt Plan
       id: plan
-      if: github.ref_name == 'test'
       run: |
         git config --global url."https://github.com/".insteadOf \
         ssh://git@github.com/ && \
@@ -75,33 +74,17 @@ runs:
         --terragrunt-source-update \
         --terragrunt-non-interactive \
         --terragrunt-parallelism 1 \
-        --terragrunt-working-dir dev/us-east-1
+        --terragrunt-working-dir ${{ inputs.TerragruntPath }}
       shell: bash
 
-    - name: Update Pull Request
-      uses: actions/github-script@v5
-      if: ${{ github.event_name == 'pull_request' }}
-      env:
-        PLAN: "Terraform \n ${{ steps.plan.outputs.stdout }}"
-      with:
-        github-token: ${{ github.token }}
-        script: |
-          const output = `#### Terraform ⚙️\`${{ steps.init.outcome }}\`
-          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-
-          <details><summary>Show Plan</summary>
-
-          \`\`\`\n
-          ${process.env.PLAN}
-          \`\`\`
-
-          </details>
-
-          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-
-          github.rest.issues.createComment({
-            issue_number: ${{ github.event.inputs.PR_number }},
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: output
-          })
+    - name: Terragrunt Apply
+      id: plan
+      run: |
+        git config --global url."https://github.com/".insteadOf \
+        ssh://git@github.com/ && \
+        terragrunt run-all apply \
+        --terragrunt-source-update \
+        --terragrunt-non-interactive \
+        --terragrunt-parallelism 1 \
+        --terragrunt-working-dir ${{ inputs.TerragruntPath }}
+      shell: bash
