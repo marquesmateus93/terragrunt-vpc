@@ -66,6 +66,7 @@ runs:
       shell: bash
 
     - name: Terragrunt Plan
+      id: plan
       if: github.ref_name == 'test'
       run: |
         git config --global url."https://github.com/".insteadOf \
@@ -76,3 +77,30 @@ runs:
         --terragrunt-parallelism 1 \
         --terragrunt-working-dir dev/us-east-1
       shell: bash
+
+    - name: Update Pull Request
+      uses: actions/github-script@v5
+      env:
+        PLAN: "Terraform \n ${{ steps.plan.outputs.stdout }}"
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `#### Terraform ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+          <details><summary>Show Plan</summary>
+
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
+
+          </details>
+
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+          github.rest.issues.createComment({
+            issue_number: ${{ github.event.inputs.PR_number }},
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
