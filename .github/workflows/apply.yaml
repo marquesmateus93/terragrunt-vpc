@@ -1,4 +1,4 @@
-name: Terragrunt VPC Deploy
+name: Terragrunt VPC Apply
 on:
   push:
     branches:
