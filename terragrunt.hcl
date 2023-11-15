@@ -23,7 +23,7 @@ remote_state {
   backend = "s3"
   config = {
     encrypt        = true
-    bucket         = "${local.prefix_name}-${local.environment_name}-${local.account_id}-${local.region_name}"
+    bucket         = "${local.environment_name}-${local.prefix_name}-${local.account_id}-${local.region_name}"
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = local.region_name
     dynamodb_table = local.prefix_name
