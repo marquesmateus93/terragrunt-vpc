@@ -6,7 +6,7 @@ locals {
   prefix_name       = local.account.locals.prefix_name
   account_id        = local.account.locals.account_id
   region_name       = local.region.locals.region_name
-  environment_name  = local.env.locals.environment_name
+  environment_folder  = local.env.locals.environment_folder
 }
 
 generate "provider" {
@@ -23,7 +23,7 @@ remote_state {
   backend = "s3"
   config = {
     encrypt        = true
-    bucket         = "${local.environment_name}-${local.prefix_name}-${local.account_id}-${local.region_name}"
+    bucket         = "${local.environment_folder}-${local.prefix_name}-${local.account_id}-${local.region_name}"
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = local.region_name
     dynamodb_table = local.prefix_name

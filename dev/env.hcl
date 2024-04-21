@@ -1,3 +1,3 @@
 locals {
-  environment_name  = "dev"
+  environment_folder  = "dev"
 }
