@@ -17,7 +17,34 @@ dependency "tags" {
 }
 
 inputs = {
-  prefix_name = dependency.tags.outputs.prefix_name
+  prefix_name           = dependency.tags.outputs.prefix_name
+  
+  vpc_cidr_block        = "10.0.0.0/16"
+
+  public_cidr_block     = [
+    "10.0.1.0/24",
+    "10.0.2.0/24",
+    "10.0.3.0/24"
+  ]
+  
+  private_cidr_block    = [
+    "10.0.11.0/24",
+    "10.0.12.0/24",
+    "10.0.13.0/24"
+  ]
+
+  resources_cidr_block  = [
+    "10.0.21.0/24",
+    "10.0.22.0/24",
+    "10.0.33.0/24"
+  ]
+
+  azs = [
+    "us-east-2a",
+    "us-east-2b",
+    "us-east-2c"
+  ]
+
   tags = {
     environment = dependency.tags.outputs.environment
     creator_id  = dependency.tags.outputs.creator_id

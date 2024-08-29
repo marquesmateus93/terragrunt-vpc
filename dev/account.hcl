@@ -1,4 +1,4 @@
 locals {
-  prefix_name       = "marques"
-  account_id        = get_aws_account_id()
+  prefix_name       = "marques-vpc"
+  account_id        = "128684785872"
 }
