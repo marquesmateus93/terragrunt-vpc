@@ -39,7 +39,7 @@ jobs:
 #########
       - name: Echo Test
         run: |
-          echo ${{ steps.filter.outputs }}
+          echo ${{ toJson(steps.filter.outputs) }}
 
       - name: AWS Credentials - DEV
         if: steps.filter.outputs.dev == 'true'
