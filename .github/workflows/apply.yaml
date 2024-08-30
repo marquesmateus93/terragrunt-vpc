@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  ACCOUNT_NUMBER:     ${{ github.ref == 'refs/heads/master' && vars.AWS_DEV_ACCOUNT }}
+  ACCOUNT_NUMBER:     ${{ github.ref == 'refs/heads/master' && vars.AWS_STG_ACCOUNT }}
   AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
   terraformVersion:   ${{ vars.TERRAFORM_VERSION }}
   terragruntVersion:  ${{ vars.TERRAGRUNT_VERSION }}
