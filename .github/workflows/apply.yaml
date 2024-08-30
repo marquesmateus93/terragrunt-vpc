@@ -12,9 +12,6 @@ env:
   AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
   TERRAFORM_VERSION:  ${{ vars.TERRAFORM_VERSION }}
   TERRAGRUNT_VERSION: ${{ vars.TERRAGRUNT_VERSION }}
-  AWS_DEV_ACCOUNT:    ${{ vars.AWS_DEV_ACCOUNT }}
-  AWS_STA_ACCOUNT:    ${{ vars.AWS_STA_ACCOUNT }}
-  AWS_PRO_ACCOUNT:    ${{ vars.AWS_PRO_ACCOUNT }}
   #TERRAGRUNT_PATH:    ${{ vars.DEV_ENV }}/${{ vars.AWS_DEFAULT_REGION }}
 
 jobs:
@@ -30,6 +27,10 @@ jobs:
 
       - name: Paths Filter
         uses: marquesmateus93/actions-templates/paths-filter@master
+        env:
+          AWS_DEV_ACCOUNT:  ${{ vars.AWS_DEV_ACCOUNT }}
+          AWS_STA_ACCOUNT:  ${{ vars.AWS_STA_ACCOUNT }}
+          AWS_PRO_ACCOUNT:  ${{ vars.AWS_PRO_ACCOUNT }}
 
 #########
 
