@@ -38,7 +38,7 @@ jobs:
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT }}:role/GitHubActions
+          role-to-assume: arn:aws:iam::${{ steps.paths_filter.outputs.AWS_ACCOUNT }}:role/GitHubActions
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Install
