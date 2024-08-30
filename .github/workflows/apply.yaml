@@ -1,19 +1,21 @@
-name: Terragrunt VPC Apply
+name: VPC Deploy
 on:
   push:
-    branches:
-      - master
+    paths:
+      - 'dev/**'
+      - 'sta/**'
+      - 'pro/**'
   workflow_dispatch:
 
 env:
-  ACCOUNT_NUMBER:     ${{ github.ref == 'refs/heads/master' && vars.AWS_STG_ACCOUNT }}
+  #AWS_ACCOUNT:        ${{ github.ref == 'refs/heads/dev' && vars.AWS_DEV_ACCOUNT || github.ref == 'refs/heads/sta' && vars.AWS_STA_ACCOUNT || github.ref == 'refs/heads/sta' && vars.AWS_STA_ACCOUNT}}
   AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
-  terraformVersion:   ${{ vars.TERRAFORM_VERSION }}
-  terragruntVersion:  ${{ vars.TERRAGRUNT_VERSION }}
-  terragruntPath:     ${{ vars.DEV_ENV }}/${{ vars.AWS_DEFAULT_REGION }}
+  TERRAFORM_VERSION:  ${{ vars.TERRAFORM_VERSION }}
+  TERRAGRUNT_VERSION: ${{ vars.TERRAGRUNT_VERSION }}
+  #TERRAGRUNT_PATH:    ${{ vars.DEV_ENV }}/${{ vars.AWS_DEFAULT_REGION }}
 
 jobs:
-  TerragruntVPCDeploy:
+  VPC_Deploy:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -23,19 +25,64 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: AWS Credentials
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            dev:
+              - 'dev/**'
+            sta:
+              - 'sta/**'
+            pro:
+              - 'pro/**'
+
+#########
+
+      - name: AWS Credentials - DEV
+        if: steps.filter.outputs.dev == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ env.ACCOUNT_NUMBER }}:role/GitHubActions
+          role-to-assume: arn:aws:iam::${{ vars.AWS_DEV_ACCOUNT }}:role/GitHubActions
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: AWS Credentials - STA
+        if: steps.filter.outputs.sta == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.AWS_STA_ACCOUNT }}:role/GitHubActions
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: AWS Credentials - PRO
+        if: steps.filter.outputs.pro == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.AWS_PRO_ACCOUNT }}:role/GitHubActions
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Install
         uses: marquesmateus93/actions-templates/terraform@master
         env:
-          terraformVersion: ${{ env.terraformVersion }}
+          TERRAFORM_VERSION: ${{ env.TERRAFORM_VERSION }}
 
-      - name: Terragrunt Install
+#########
+
+      - name: Terragrunt Install - DEV
+        if: steps.filter.outputs.dev == 'true'
         uses: marquesmateus93/actions-templates/terragrunt@master
         env:
-          terragruntVersion: ${{ env.terragruntVersion }}
-          terragruntPath:   ${{ env.terragruntPath }}
+          TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
+          TERRAGRUNT_PATH:    dev/${{ env.TERRAGRUNT_PATH }}
+
+      - name: Terragrunt Install - STA
+        if: steps.filter.outputs.sta == 'true'
+        uses: marquesmateus93/actions-templates/terragrunt@master
+        env:
+          TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
+          TERRAGRUNT_PATH:    sta/${{ env.TERRAGRUNT_PATH }}
+
+      - name: Terragrunt Install - PRO
+        if: steps.filter.outputs.pro == 'true'
+        uses: marquesmateus93/actions-templates/terragrunt@master
+        env:
+          TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
+          TERRAGRUNT_PATH:    pro/${{ env.TERRAGRUNT_PATH }}
