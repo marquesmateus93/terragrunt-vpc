@@ -32,10 +32,10 @@ jobs:
       - name: Terraform Install
         uses: marquesmateus93/actions-templates/terraform@master
         env:
-          terraformVersion: $terraformVersion
+          terraformVersion: ${{ env.terraformVersion }}
 
       - name: Terragrunt Install
         uses: marquesmateus93/actions-templates/terragrunt@master
         env:
-          terraformVersion: $terragruntVersion
-          terragruntPath:   $terragruntPath
+          terragruntVersion: ${{ env.terragruntVersion }}
+          terragruntPath:   ${{ env.terragruntPath }}
