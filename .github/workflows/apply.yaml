@@ -68,7 +68,7 @@ jobs:
 
       - name: Terragrunt Install - DEV
         if: steps.filter.outputs.dev == 'true'
-        uses: marquesmateus93/actions-templates/terragrunt@master
+        uses: marquesmateus93/actions-templates/terragrunt/action.yml@master
         env:
           TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
           TERRAGRUNT_PATH:    dev/${{ env.TERRAGRUNT_PATH }}
