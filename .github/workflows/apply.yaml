@@ -31,6 +31,7 @@ jobs:
           filters: |
             dev:
               - 'dev/**'
+              - 'sta/**'
             sta:
               - 'sta/**'
             pro:
@@ -39,7 +40,7 @@ jobs:
 #########
       - name: Echo Test
         run: |
-          echo ${{ toJSON(steps.filter.outputs) }}
+          echo ${{ toJSON(steps.filter.outputs.dev) }}
 
       - name: AWS Credentials - DEV
         if: steps.filter.outputs.dev == 'true'
