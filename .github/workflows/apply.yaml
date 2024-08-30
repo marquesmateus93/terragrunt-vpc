@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  #AWS_ACCOUNT:        ${{ github.ref == 'refs/heads/dev' && vars.AWS_DEV_ACCOUNT || github.ref == 'refs/heads/sta' && vars.AWS_STA_ACCOUNT || github.ref == 'refs/heads/sta' && vars.AWS_STA_ACCOUNT}}
+  #AWS_ACCOUNT:        ${{ steps.filter.outputs.dev == 'true' && vars.AWS_DEV_ACCOUNT || steps.filter.outputs.sta == 'true' && vars.AWS_STA_ACCOUNT || github.ref == 'refs/heads/pro' && vars.AWS_PRO_ACCOUNT}}
   AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
   TERRAFORM_VERSION:  ${{ vars.TERRAFORM_VERSION }}
   TERRAGRUNT_VERSION: ${{ vars.TERRAGRUNT_VERSION }}
@@ -25,42 +25,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            dev:
-              - 'dev/**'
-              - 'sta/**'
-            sta:
-              - 'sta/**'
-            pro:
-              - 'pro/**'
+      - name: Paths Filter
+        uses: marquesmateus93/actions-templates/paths-filter@master
 
 #########
-      - name: Echo Test
-        run: |
-          echo ${{ toJSON(steps.filter.outputs.dev) }}
 
-      - name: AWS Credentials - DEV
-        if: steps.filter.outputs.dev == 'true'
+      - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ vars.AWS_DEV_ACCOUNT }}:role/GitHubActions
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: AWS Credentials - STA
-        if: steps.filter.outputs.sta == 'true'
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ vars.AWS_STA_ACCOUNT }}:role/GitHubActions
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: AWS Credentials - PRO
-        if: steps.filter.outputs.pro == 'true'
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ vars.AWS_PRO_ACCOUNT }}:role/GitHubActions
+          role-to-assume: arn:aws:iam::$AWS_ACCOUNT:role/GitHubActions
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Install
@@ -70,23 +43,8 @@ jobs:
 
 #########
 
-      - name: Terragrunt Install - DEV
-        if: steps.filter.outputs.dev == 'true'
+      - name: Terragrunt Install
         uses: marquesmateus93/actions-templates/terragrunt@master
         env:
           TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
           TERRAGRUNT_PATH:    dev/${{ env.AWS_REGION }}
-
-      - name: Terragrunt Install - STA
-        if: steps.filter.outputs.sta == 'true'
-        uses: marquesmateus93/actions-templates/terragrunt@master
-        env:
-          TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
-          TERRAGRUNT_PATH:    sta/${{ env.AWS_REGION }}
-
-      - name: Terragrunt Install - PRO
-        if: steps.filter.outputs.pro == 'true'
-        uses: marquesmateus93/actions-templates/terragrunt@master
-        env:
-          TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
-          TERRAGRUNT_PATH:    pro/${{ env.AWS_REGION }}
