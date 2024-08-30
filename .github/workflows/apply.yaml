@@ -37,6 +37,9 @@ jobs:
               - 'pro/**'
 
 #########
+      - name: Echo Test
+        run: |
+          echo ${{ steps.filter.outputs }}
 
       - name: AWS Credentials - DEV
         if: steps.filter.outputs.dev == 'true'
@@ -68,21 +71,21 @@ jobs:
 
       - name: Terragrunt Install - DEV
         if: steps.filter.outputs.dev == 'true'
-        uses: marquesmateus93/actions-templates/terragrunt/action.yml@master
+        uses: marquesmateus93/actions-templates/terragrunt@master
         env:
           TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
-          TERRAGRUNT_PATH:    dev/${{ env.TERRAGRUNT_PATH }}
+          TERRAGRUNT_PATH:    dev/${{ env.AWS_REGION }}
 
       - name: Terragrunt Install - STA
         if: steps.filter.outputs.sta == 'true'
         uses: marquesmateus93/actions-templates/terragrunt@master
         env:
           TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
-          TERRAGRUNT_PATH:    sta/${{ env.TERRAGRUNT_PATH }}
+          TERRAGRUNT_PATH:    sta/${{ env.AWS_REGION }}
 
       - name: Terragrunt Install - PRO
         if: steps.filter.outputs.pro == 'true'
         uses: marquesmateus93/actions-templates/terragrunt@master
         env:
           TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
-          TERRAGRUNT_PATH:    pro/${{ env.TERRAGRUNT_PATH }}
+          TERRAGRUNT_PATH:    pro/${{ env.AWS_REGION }}
