@@ -30,7 +30,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Install
-        uses: marquesmateus93/actions-templates/terraform@main
+        uses: marquesmateus93/actions-templates/terraform@master
         env:
           terraformVersion: 1.3.6
 
