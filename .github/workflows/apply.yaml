@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
 
 env:
-  ACCOUNT_NUMBER:     ${{ secrets.AWS_ACCOUNT }}
+  ACCOUNT_NUMBER:     ${{ github.ref == 'refs/heads/master' && vars.AWS_DEV_ACCOUNT }}
   AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
-  terraformVersion:   1.3.6
-  terragruntVersion:  0.58.2
-  terragruntPath:     dev/us-east-2
+  terraformVersion:   ${{ vars.TERRAFORM_VERSION }}
+  terragruntVersion:  ${{ vars.TERRAGRUNT_VERSION }}
+  terragruntPath:     ${{ vars.DEV_ENV }}/${{ vars.AWS_DEFAULT_REGION }}
 
 jobs:
   TerragruntVPCDeploy:
