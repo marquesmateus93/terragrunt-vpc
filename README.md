@@ -18,7 +18,8 @@ The application machines don't have external access and should be access by SSH,
 The database subnet was thought to be associated with an RDS instance and be accessed just from private subnets in a specific port.
 
 ## Structure
-<img src="https://github.com/user-attachments/assets/17117f34-0199-497b-bbcc-a6f5501b0ba4" width="600" height="700"/>
+<img src="https://github.com/user-attachments/assets/f73ac156-8440-4907-97ad-b54c228ce33a" width="500" height="500"/>
+
 
 ## Requirements
 
