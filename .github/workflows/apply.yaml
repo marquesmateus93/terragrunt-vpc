@@ -8,11 +8,9 @@ on:
   workflow_dispatch:
 
 env:
-  #AWS_ACCOUNT:        ${{ steps.filter.outputs.dev == 'true' && vars.AWS_DEV_ACCOUNT || steps.filter.outputs.sta == 'true' && vars.AWS_STA_ACCOUNT || github.ref == 'refs/heads/pro' && vars.AWS_PRO_ACCOUNT}}
   AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
   TERRAFORM_VERSION:  ${{ vars.TERRAFORM_VERSION }}
   TERRAGRUNT_VERSION: ${{ vars.TERRAGRUNT_VERSION }}
-  #TERRAGRUNT_PATH:    ${{ vars.DEV_ENV }}/${{ vars.AWS_DEFAULT_REGION }}
 
 jobs:
   VPC_Deploy:
@@ -33,8 +31,6 @@ jobs:
           AWS_STA_ACCOUNT:  ${{ vars.AWS_STA_ACCOUNT }}
           AWS_PRO_ACCOUNT:  ${{ vars.AWS_PRO_ACCOUNT }}
 
-#########
-
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -46,10 +42,8 @@ jobs:
         env:
           TERRAFORM_VERSION: ${{ env.TERRAFORM_VERSION }}
 
-#########
-
       - name: Terragrunt Install
         uses: marquesmateus93/actions-templates/terragrunt@master
         env:
           TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
-          TERRAGRUNT_PATH:    dev/${{ env.AWS_REGION }}
+          TERRAGRUNT_PATH:    ${{ steps.paths_filter.outputs.ENV_FOLDER }}/${{ env.AWS_REGION }}
