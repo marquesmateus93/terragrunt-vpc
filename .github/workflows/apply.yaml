@@ -9,6 +9,9 @@ on:
 
 env:
   AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
+  AWS_DEV_ACCOUNT:    ${{ vars.AWS_DEV_ACCOUNT }}
+  AWS_STA_ACCOUNT:    ${{ vars.AWS_STA_ACCOUNT }}
+  AWS_PRO_ACCOUNT:    ${{ vars.AWS_PRO_ACCOUNT }}
   TERRAFORM_VERSION:  ${{ vars.TERRAFORM_VERSION }}
   TERRAGRUNT_VERSION: ${{ vars.TERRAGRUNT_VERSION }}
 
@@ -20,30 +23,12 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Paths Filter
-        id: paths_filter
-        uses: marquesmateus93/actions-templates/paths-filter@master
+      - name: Apply Path Based
+        uses: marquesmateus93/piperoad/actions/apply-path-based@master
         env:
-          AWS_DEV_ACCOUNT:  ${{ vars.AWS_DEV_ACCOUNT }}
-          AWS_STA_ACCOUNT:  ${{ vars.AWS_STA_ACCOUNT }}
-          AWS_PRO_ACCOUNT:  ${{ vars.AWS_PRO_ACCOUNT }}
-
-      - name: AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ steps.paths_filter.outputs.AWS_ACCOUNT }}:role/GitHubActions
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Terraform Install
-        uses: marquesmateus93/actions-templates/terraform@master
-        env:
-          TERRAFORM_VERSION: ${{ env.TERRAFORM_VERSION }}
-
-      - name: Terragrunt Install
-        uses: marquesmateus93/actions-templates/terragrunt@master
-        env:
+          AWS_REGION:         ${{ env.AWS_DEFAULT_REGION }}
+          AWS_DEV_ACCOUNT:    ${{ env.AWS_DEV_ACCOUNT }}
+          AWS_STA_ACCOUNT:    ${{ env.AWS_STA_ACCOUNT }}
+          AWS_PRO_ACCOUNT:    ${{ env.AWS_PRO_ACCOUNT }}
+          TERRAFORM_VERSION:  ${{ env.TERRAFORM_VERSION }}
           TERRAGRUNT_VERSION: ${{ env.TERRAGRUNT_VERSION }}
-          TERRAGRUNT_PATH:    ${{ steps.paths_filter.outputs.ENV_FOLDER }}/${{ env.AWS_REGION }}
