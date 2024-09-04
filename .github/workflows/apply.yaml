@@ -15,8 +15,8 @@ jobs:
       contents: read
 
     steps:
-      - name: Apply Path Based
-        uses: marquesmateus93/piperoad/actions/apply-path-based@master
+      - name: Terragrunt Apply Path Based
+        uses: marquesmateus93/piperoad/actions/terragrunt-apply-path-based@master
         env:
           AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
           AWS_DEV_ACCOUNT:    ${{ vars.AWS_DEV_ACCOUNT }}
