@@ -1,4 +1,4 @@
-name: VPC Deploy
+name: VPC Apply
 on:
   push:
     paths:
