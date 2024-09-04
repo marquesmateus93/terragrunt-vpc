@@ -1,78 +1,23 @@
-name: Terragrunt VPC Destroy
+name: VPC Destroy
 on:
+  push:
+    paths:
+      - 'dev/**'
+      - 'sta/**'
+      - 'pro/**'
   workflow_dispatch:
 
-env:
-  ACCOUNT_NUMBER:     ${{ secrets.AWS_ACCOUNT }}
-  AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
-  TerraformVersion:   1.3.6
-  TerragruntVersion:  0.58.2
-  TerragruntPath:     dev/us-east-2
-
 jobs:
-  TerragruntVPCDestroy:
+  VPC_Deploy:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::${{ env.ACCOUNT_NUMBER }}:role/GitHubActions
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: TFEnv Install
-        run: |
-          git \
-          clone \
-          --depth=1 \
-          https://github.com/tfutils/tfenv.git \
-          ~/.tfenv && \
-          echo  "$HOME/.tfenv/bin" >> $GITHUB_PATH
-        shell: bash
-
-      - name: Terraform Setup Version
-        run: |
-          tfenv install $TerraformVersion && \
-          tfenv use $TerraformVersion
-        shell: bash
-
-      - name: TGEnv Install
-        run: |
-          git \
-          clone \
-          https://github.com/cunymatthieu/tgenv.git \
-          ~/.tgenv && \
-          echo  "$HOME/.tgenv/bin" >> $GITHUB_PATH
-        shell: bash
-
-      - name: Terragrunt Setup Version
-        run: |
-          tgenv install $TerragruntVersion && \
-          tgenv use $TerragruntVersion
-        shell: bash
-
-      - name: Terragrunt Format
-        run: |
-          terragrunt hclfmt \
-          --terragrunt-source-update \
-          --terragrunt-non-interactive \
-          --terragrunt-parallelism 1 \
-          --terragrunt-working-dir $TerragruntPath
-        shell: bash
-
       - name: Terragrunt Destroy
-        run: |
-          git config --global url."https://github.com/".insteadOf \
-          ssh://git@github.com/ && \
-          terragrunt run-all destroy \
-          --terragrunt-source-update \
-          --terragrunt-non-interactive \
-          --terragrunt-parallelism 1 \
-          --terragrunt-working-dir $TerragruntPath
-        shell: bash
+        uses: marquesmateus93/piperoad/actions/terragrunt-apply-path-based@master
+        env:
+          AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
+          TERRAFORM_VERSION:  ${{ vars.TERRAFORM_VERSION }}
+          TERRAGRUNT_VERSION: ${{ vars.TERRAGRUNT_VERSION }}
