@@ -1,92 +1,23 @@
-name: Terragrunt VPC Pull Request
+name: VPC Pull Request
 on:
   pull_request:
     types:
       - opened
 
 jobs:
-  PullRequest:
+  VPC_Pull_Request:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: TFEnv Install
-        run: |
-          git \
-          clone \
-          --depth=1 \
-          https://github.com/tfutils/tfenv.git \
-          ~/.tfenv && \
-          echo  "$HOME/.tfenv/bin" >> $GITHUB_PATH
-        shell: bash
-
-      - name: Terraform Setup Version
-        run: |
-          tfenv install $TerraformVersion && \
-          tfenv use $TerraformVersion
-        shell: bash
-
-      - name: TGEnv Install
-        run: |
-          git \
-          clone \
-          https://github.com/cunymatthieu/tgenv.git \
-          ~/.tgenv && \
-          echo  "$HOME/.tgenv/bin" >> $GITHUB_PATH
-        shell: bash
-
-      - name: Terragrunt Setup Version
-        run: |
-          tgenv install $TerragruntVersion && \
-          tgenv use $TerragruntVersion
-        shell: bash
-
-      - name: Terragrunt Format
-        run: |
-          terragrunt hclfmt \
-          --terragrunt-source-update \
-          --terragrunt-non-interactive \
-          --terragrunt-parallelism 1 \
-          --terragrunt-working-dir $TerragruntPath
-        shell: bash
-
-      - name: Terragrunt Plan
-        id: plan
-        run: |
-          git config --global url."https://github.com/".insteadOf \
-          ssh://git@github.com/ && \
-          terragrunt run-all plan \
-          --terragrunt-source-update \
-          --terragrunt-non-interactive \
-          --terragrunt-parallelism 1 \
-          --terragrunt-working-dir $TerragruntPath
-        shell: bash
-
-      - name: Update Pull Request
-        uses: actions/github-script@v5
+      - name: Terragrunt Plan Path Based
+        uses: marquesmateus93/piperoad/actions/pull-request@master
         env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `#### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            
-            <details><summary>Show Plan</summary>
-            
-            \`\`\`\n
-            ${process.env.PLAN}
-            \`\`\`
-            
-            </details>
-            
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-            
-            github.rest.issues.createComment({
-              issue_number: ${{ github.event.inputs.PR_number }},
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
+          AWS_REGION:         ${{ vars.AWS_DEFAULT_REGION }}
+          AWS_DEV_ACCOUNT:    ${{ vars.AWS_DEV_ACCOUNT }}
+          AWS_STA_ACCOUNT:    ${{ vars.AWS_STA_ACCOUNT }}
+          AWS_PRO_ACCOUNT:    ${{ vars.AWS_PRO_ACCOUNT }}
+          TERRAFORM_VERSION:  ${{ vars.TERRAFORM_VERSION }}
+          TERRAGRUNT_VERSION: ${{ vars.TERRAGRUNT_VERSION }}
